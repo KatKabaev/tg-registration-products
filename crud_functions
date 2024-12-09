@@ -2,14 +2,14 @@ import sqlite3
 
 
 connection_products = sqlite3.connect("database.db")
-cursor_product = connection_products.cursor()
+cursor_products = connection_products.cursor()
 
 connection_users = sqlite3.connect("database2.db")
 cursor_users = connection_users.cursor()
 
 def initiate_db():
 
-    cursor_product.execute("""
+    cursor_products.execute("""
     CREATE TABLE IF NOT EXISTS Products(
     id INTEGER PRIMARY KEY,
     title TEXT NOT NULL,
@@ -31,16 +31,17 @@ def initiate_db():
     connection_users.commit()
 
 # запустить один раз:
-# a = 1
-# for i in range(4):
-#     cursor.execute("INSERT INTO Products (title, description, price) VALUES (?, ?, ?)",
-#                    (f'Product {a}', f'описание {a}', f'{a*100}'))
-#     a += 1
+def insert_products():
+    a = 1
+    for i in range(4):
+        cursor_products.execute("INSERT INTO Products (title, description, price) VALUES (?, ?, ?)",
+                       (f'Product {a}', f'описание {a}', f'{a*100}'))
+        a += 1
 
 
 def get_all_products():
-    cursor_product.execute("SELECT * FROM Products")
-    products = cursor_product.fetchall()
+    cursor_products.execute("SELECT * FROM Products")
+    products = cursor_products.fetchall()
 
     connection_products.commit()
     return products
@@ -57,4 +58,3 @@ def is_included(username):
         return False
     else:
         return True
-
