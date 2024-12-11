@@ -37,6 +37,7 @@ def insert_products():
         cursor_products.execute("INSERT INTO Products (title, description, price) VALUES (?, ?, ?)",
                        (f'Product {a}', f'описание {a}', f'{a*100}'))
         a += 1
+        connection_products.commit()
 
 
 def get_all_products():
