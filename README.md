@@ -13,11 +13,11 @@
    * Кнопка для регистрации пользователя.<br>
      Данные о пользователе будут сохраняться в ```database.db```:
      <p align="center">
-    <img src="https://github.com/KatKabaev/tg-registration-products/blob/main/images/img1.png">
-    </p>
+     <img src="https://github.com/KatKabaev/tg-registration-products/blob/main/images/img1.png">
+     </p>
 
    * Кнопка для продажи продуктов:
      <p align="center">
-    <img src="https://github.com/KatKabaev/tg-registration-products/blob/main/images/img2.png" width="500">
-    </p>
+     <img src="https://github.com/KatKabaev/tg-registration-products/blob/main/images/img2.png" width="500">
+     </p>
 
