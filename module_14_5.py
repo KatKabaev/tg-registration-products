@@ -3,14 +3,11 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from crud_functions import pu_1
 
 
-from crud_functions import *
 
-get_all_products()
-initiate_db()
-
-api = ''
+api = '7394162589:AAGhNhFIqJJdBA-DHFBOF0scIFQSs2sDut8'
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
@@ -35,6 +32,10 @@ kb_products.add(inline_button_2)
 kb_products.add(inline_button_3)
 kb_products.add(inline_button_4)
 
+pu_1.initiate_db()
+# запустить один раз:
+pu_1.add_products()
+
 
 @dp.message_handler(commands=['start'])
 async def start(message):
@@ -46,14 +47,13 @@ async def inform(mes):
 
 @dp.message_handler(text=['Купить'])
 async def get_buying_list(message):
-    products = get_all_products()
+    products = pu_1.get_all_products()
     number = 1
     for i in products:
         await message.answer(f'Название: {i[1]} | Описание: {i[2]} | Цена: {i[3]}')
         with open(f'{number}.jpg', "rb") as img:
             await message.answer_photo(img, f'Продукт {number}')
         number += 1
-    connection_products.close()
     await message.answer('Выберите продукт для покупки:', reply_markup=kb_products)
 
 
@@ -70,7 +70,7 @@ async def sing_up(message):
 
 @dp.message_handler(state=RegistrationState.username)
 async def set_username(message, state):
-    if is_included(message.text):
+    if pu_1.is_included(message.text):
         await message.answer("Пользователь существует, введите другое имя")
         await RegistrationState.username.set()
     else:
@@ -88,7 +88,7 @@ async def set_email(message, state):
 async def set_age(message, state):
     await state.update_data(age=message.text)
     data = await state.get_data()
-    add_user(data['username'], data['email'], data['age'])
+    pu_1.add_user(data['username'], data['email'], data['age'])
     await message.answer("Вы успешно зарегистрировались!")
     await state.finish()
 
@@ -106,3 +106,4 @@ async def all_massages(message):
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
+    pu_1.connection.close()
