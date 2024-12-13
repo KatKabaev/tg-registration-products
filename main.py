@@ -7,7 +7,7 @@ from crud_functions import pu_1
 
 
 
-api = '7394162589:AAGhNhFIqJJdBA-DHFBOF0scIFQSs2sDut8'
+api = ''
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
